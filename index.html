@@ -4,21 +4,12 @@
     <meta charset="utf-8">
     <title>Dojo-Bootstrap</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="libs/css/bootstrap.css">
+    <link rel="stylesheet" href="./libs/css/bootstrap.css">
+    <script type="text/javascript" src="./js/dojoConfig.js"></script>
+    <script type="text/javascript" src="./libs/js/dojo/dojo.js"></script>
+    <script type="text/javascript" src="./js/index.js"></script>
   </head>
   <body>
     <button type="button" id="loading-button" class="btn btn-primary" data-loading-text="Loading...">Load</button>
-    <script src="./js/dojoConfig.js"></script>
-    <script type="text/javascript" src="./dojo/dojo.js"></script>
-    <script>
-      require(["bootstrap/Button", "dojo/query"], function(Button, query) {
-        query("#loading-button").on("click", function(e) {
-          query(e.target).button('loading');
-          setTimeout(function() {
-            query(e.target).button('reset');
-          }, 2000);
-        });
-      });
-    </script>
   </body>
 </html>
