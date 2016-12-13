@@ -13,10 +13,6 @@ var dojoConfig = {
       location: "libs/js/dijit"
     },
     {
-      name: "bootstrap",
-      location: "libs/js/dojo-bootstrap"
-    },
-    {
       name: "modules",
       location: "js/modules"
     }

@@ -33,12 +33,23 @@ define([
 
         generateHtmlToAppend(){
           return `
-            <div class="${this.domRef}-item">
-              <p>${this.name}</p>
-              <p>${this.surname}</p>
-              <p>${this.phone}</p>
-              <p>${this.email}</p>
-              <img src="${this.photo}" />
+            <div class="col-sm-6 col-md-3">
+              <div class="thumbnail">
+                <img src="${this.photo}" />
+                <div class="caption">
+                  <h3>${this.name} ${this.surname}</h3>
+                  <p>${this.phone}</p>
+                  <p>${this.email}</p>
+                  <p>
+                    <a class="btn btn-primary" role="button">
+                      <span class="glyphicon glyphicon-pencil" />
+                    </a>
+                    <a class="btn btn-danger" role="button">
+                      <span class="glyphicon glyphicon-remove" />
+                    </a>
+                  </p>
+                </div>
+              </div>
             </div>
           `
         }
