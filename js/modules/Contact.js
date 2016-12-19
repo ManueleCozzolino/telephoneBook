@@ -4,11 +4,13 @@ define([
   "dojo/dom",
   "dojo/dom-construct",
   "dijit/_WidgetBase",
-  "dojo/request/script"
+  "dojo/request/script",
+  "dojo/parser",
+  "modules/Button"
 ],
 // dojo/request/script, differently from dojo/request/xhr, allows cross-origin http request
 
-  (declare, query, dom, domConstruct, _WidgetBase, script) => {
+  (declare, query, dom, domConstruct, _WidgetBase, script, parser) => {
 
     // It is a good practice to name the classes as "<namespace>.<className>", where
     // namespace is the owner module's name
@@ -29,6 +31,7 @@ define([
           let listDomNode = query(`.${this.domRef}`)[0];
           let htmlList = this.generateHtmlToAppend();
           domConstruct.place(htmlList, listDomNode, "last");
+          parser.parse();
         },
 
         generateHtmlToAppend(){
@@ -47,6 +50,7 @@ define([
                     <a class="btn btn-danger" role="button">
                       <span class="glyphicon glyphicon-remove" />
                     </a>
+                    <div data-dojo-type="Button.BootstrapButton"></div>
                   </p>
                 </div>
               </div>
@@ -70,7 +74,8 @@ define([
             {
               query: {
                 "ext": true,
-                "amount": 25
+                "amount": 25,
+                "region": "United States"
               },
               jsonp: "callback"
             }
