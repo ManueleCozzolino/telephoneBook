@@ -5,12 +5,11 @@ define([
   "dojo/dom-construct",
   "dijit/_WidgetBase",
   "dojo/request/script",
-  "dojo/parser",
   "modules/Button"
 ],
 // dojo/request/script, differently from dojo/request/xhr, allows cross-origin http request
 
-  (declare, query, dom, domConstruct, _WidgetBase, script, parser) => {
+  (declare, query, dom, domConstruct, _WidgetBase, script) => {
 
     // It is a good practice to name the classes as "<namespace>.<className>", where
     // namespace is the owner module's name
@@ -30,8 +29,14 @@ define([
         postCreate(){
           let listDomNode = query(`.${this.domRef}`)[0];
           let htmlList = this.generateHtmlToAppend();
-          domConstruct.place(htmlList, listDomNode, "last");
-          parser.parse();
+          let domList = domConstruct.toDom(htmlList);
+
+          let buttonsRef = query(".buttons", domList)[0];
+
+          this.createAndAppendButton("edit", buttonsRef);
+          this.createAndAppendButton("delete", buttonsRef);
+
+          domConstruct.place(domList, listDomNode, "last");
         },
 
         generateHtmlToAppend(){
@@ -43,24 +48,23 @@ define([
                   <h3>${this.name} ${this.surname}</h3>
                   <p>${this.phone}</p>
                   <p>${this.email}</p>
-                  <p>
-                    <a class="btn btn-primary" role="button">
-                      <span class="glyphicon glyphicon-pencil" />
-                    </a>
-                    <a class="btn btn-danger" role="button">
-                      <span class="glyphicon glyphicon-remove" />
-                    </a>
-                    <div data-dojo-type="Button.BootstrapButton"></div>
-                  </p>
+                  <p class="buttons"></p>
                 </div>
               </div>
             </div>
           `
+        },
+
+        createAndAppendButton(buttonType, buttonsRef){
+          let button = new Button.BootstrapButton(buttonType);
+          let buttonHtml = button.getTemplate();
+          let buttonNode = domConstruct.toDom(buttonHtml);
+          buttonsRef.appendChild(buttonNode );
         }
       }
     );
 
-    declare(
+    return declare(
       "Contact.UserList",
       [_WidgetBase],
       {
@@ -93,7 +97,7 @@ define([
             })
           }, (err) => {
             console.log(`An error has occurred ${err}`);
-          });
+          })
         }
       }
     );
