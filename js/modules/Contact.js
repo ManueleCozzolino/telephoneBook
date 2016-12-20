@@ -33,8 +33,8 @@ define([
 
           let buttonsRef = query(".buttons", domList)[0];
 
-          this.createAndAppendButton("edit", buttonsRef);
-          this.createAndAppendButton("delete", buttonsRef);
+          this.createAndAppendButton("edit", this.destroyCurrentElement, buttonsRef);
+          this.createAndAppendButton("delete", this.destroyCurrentElement, buttonsRef);
 
           domConstruct.place(domList, listDomNode, "last");
         },
@@ -55,11 +55,16 @@ define([
           `
         },
 
-        createAndAppendButton(buttonType, buttonsRef){
+        createAndAppendButton(buttonType, action, buttonsRef){
           let button = new Button.BootstrapButton(buttonType);
-          let buttonHtml = button.getTemplate();
-          let buttonNode = domConstruct.toDom(buttonHtml);
-          buttonsRef.appendChild(buttonNode );
+          let buttonNode = button.getButtonNode();
+          button.attachAction(buttonNode, action);
+          buttonsRef.appendChild(buttonNode);
+        },
+
+        destroyCurrentElement(){
+          console.log("ciao", this);
+          // this.destroy()
         }
       }
     );
