@@ -2,8 +2,9 @@ define([
     "dojo/_base/declare",
     "dijit/_WidgetBase",
     "dojo/dom-construct",
-    "dojo/on"
-], (declare, _WidgetBase, domConstruct, on) => {
+    "dojo/on",
+    "dojo/query"
+], (declare, _WidgetBase, domConstruct, on, query) => {
     declare(
       "Button.BootstrapButton",
       [_WidgetBase],
@@ -37,7 +38,7 @@ define([
           if(!this.templateHtml){
             let templateHtml = `
               <a class="btn btn-${this.btnType}" role="button">
-              <span class="glyphicon glyphicon-${this.iconType}" />
+                <span class="glyphicon glyphicon-${this.iconType}" />
               </a>
             `
             this.templateHtml = templateHtml
@@ -46,9 +47,12 @@ define([
         },
 
         getButtonNode(){
-          let buttonHtml = this.getTemplate();
-          let buttonNode = domConstruct.toDom(buttonHtml);
-          return buttonNode
+          if(!this.buttonNode){
+            let buttonHtml = this.getTemplate();
+            let buttonNode = domConstruct.toDom(buttonHtml);
+            this.buttonNode = buttonNode;
+          }
+          return this.buttonNode
         },
 
         tryGetCorrispondence(buttonType){
@@ -61,8 +65,10 @@ define([
           }
         },
 
-        attachAction(buttonNode, action){
-          on(this.domNode, 'click', action)
+        attachAction(action){
+          // on(target, "click", () => {
+          //     console.log("khsdfshkf");
+          // })
         }
       }
     );

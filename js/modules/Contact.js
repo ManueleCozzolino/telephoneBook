@@ -58,12 +58,11 @@ define([
         createAndAppendButton(buttonType, action, buttonsRef){
           let button = new Button.BootstrapButton(buttonType);
           let buttonNode = button.getButtonNode();
-          button.attachAction(buttonNode, action);
-          buttonsRef.appendChild(buttonNode);
+          domConstruct.place(buttonNode, buttonsRef, "last");
+          button.attachAction(action);
         },
 
         destroyCurrentElement(){
-          console.log("ciao", this);
           // this.destroy()
         }
       }
